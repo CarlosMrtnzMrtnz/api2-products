@@ -11,7 +11,8 @@ const productsModel = mongoose.Schema({
     },
     disponible: {
         type: Boolean,
-        required: true
+        required: true,
+        default: true
     },
     descripcion: {
         type: String,
@@ -26,6 +27,10 @@ const productsModel = mongoose.Schema({
         required: true
     },
     serie: {
+        type: String,
+        required: true
+    },
+    imagen: {
         type: String,
         required: true
     }
