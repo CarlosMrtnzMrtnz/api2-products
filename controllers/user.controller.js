@@ -1,6 +1,6 @@
 const userModel = require("../models/user.model")
 require('dotenv').config()
-
+const jwt = require('jsonwebtoken')
 exports.getUser = async (req, res)=> {
     try {
         let data = await userModel.find()
@@ -59,7 +59,7 @@ exports.addUser = async (req, res)=>{
                 await newUser.save()
                 res.status(201).json(newUser)
             } else {
-                res.status(400).send({msj:"Correo ya existe"})
+                res.status(400).send({error:"Correo ya existe"})
             }
         } else {
             res.status(400).send({error:"Correo Invalido"})
@@ -103,5 +103,32 @@ exports.updateUser = async (req, res)=> {
     }
 }
 
+exports.session = async (req, res)=> {
+    try {
+        let body = req.body
+        let user = await userModel.findOne({email: body.email})
+        if (user) {
+            if (user.password == body.password) {
+                
+                let payload = {
+                    id: user._id,
+                    nombre: user.nombre,
+                    // imagen: user.imagen
+                }
+                let JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
+
+                let token = jwt.sign(payload, JWT_SECRET_KEY, {expiresIn:"10S"})
+                res.status(200).json(token)
+            } else {
+                res.status(400).send({error:"Password incorrecto!"})
+            }
+        } else {
+            res.status(400).send({error:"Email incorrecto!"})
+        }
+
+    } catch (error) {
+        res.status(500).send({error:"Ha ocurrido algo comunicate con el admin"})
+    }
+}
 
 

@@ -54,7 +54,7 @@ exports.deleteProduct = async (req, res) => {
         let deleteProduct = await producModel.findOneAndDelete({ _id: id })
         res.status(200).json(deleteProduct);
       } else {
-        res.status(400).send({ error: "No se encuentra ningun producto" })
+        res.status(400).send({ error: "No se encuentra ningun producto con esa referencia" })
       }
     } else {
       res.status(400).send({ error: "Id incorrecto" })

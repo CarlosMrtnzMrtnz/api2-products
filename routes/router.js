@@ -3,6 +3,7 @@ const router = express.Router()
 const productsController = require('../controllers/product.controller')
 const userController = require('../controllers/user.controller')
 
+
 router.get('/products', productsController.getProducts)
 router.get('/product/:id', productsController.getOneProduct)
 router.post('/addproduct', productsController.addProduct)
@@ -16,5 +17,6 @@ router.get('/user/:id', userController.getOneUser)
 router.post('/adduser', userController.addUser)
 router.delete('/deleteuser/:id', userController.deleteUser)
 router.put('/updateuser/:id', userController.updateUser)
+router.post('/session', userController.session)
 
 module.exports = router
