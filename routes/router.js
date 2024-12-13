@@ -4,8 +4,9 @@ const productsController = require('../controllers/product.controller')
 const userController = require('../controllers/user.controller')
 const { desencriptarToken } = require('../middleware/jwt')
 const jwt = require('../middleware/jwt')
+const { payload } = require('../controllers/payload.controller')
 
-router.get('/products/:nombre?',desencriptarToken, productsController.getProducts)
+router.get('/products/:nombre?', productsController.getProducts)
 router.get('/product/:id', productsController.getOneProduct)
 router.post('/addproduct', productsController.addProduct)
 router.delete('/deleteproduct/:id',desencriptarToken, productsController.deleteProduct)
@@ -19,5 +20,7 @@ router.post('/adduser', userController.addUser)
 router.delete('/deleteuser/:id', userController.deleteUser)
 router.put('/updateuser/:id', userController.updateUser)
 router.post('/session', userController.session)
+
+router.get('/infoUSer', payload)
 
 module.exports = router
