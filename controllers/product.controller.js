@@ -2,8 +2,15 @@ const producModel = require("../models/products.model");
 
 exports.getProducts = async (req, res) => {
   try {
-    let dataProducts = await producModel.find();
-    res.status(200).json(dataProducts);
+    let nombre= req.params.nombre
+    if (nombre) {
+        let data = await producModel.find({nombre:{$regex: nombre, $options: 'i'}})
+        res.status(200).json(data)
+    } else {
+      let dataProducts = await producModel.find();
+      res.status(200).json(dataProducts);
+
+    }
   } catch (error) {
     console.log(error);
     res.status(500).send({ error: "Ha ocurrido algo comunicate con el admin" });
